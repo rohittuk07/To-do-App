@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+     
+        background-image: linear-gradient(#9d50bb, #6e48aa);
+      }
+
+      .container {
+        width: 600px;
+        height: 600px;
+        border-radius: 10px;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.2); /* Transparent white */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Border with light opacity */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px); /* Frosted glass effect */
+      }
+
+      .container > h1 {
+        width: fit-content;
+        border-bottom: 5px solid #fff;
+        padding-bottom: 0.5rem;
+        margin: auto;
+        color: #fff;
+      }
+
+      .search-container {
+        width: 400px;
+        border: 1px solid #fff;
+        margin: 2rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        /* background-color: red; */
+        border-radius: 5px;
+        padding-right: 0.3rem;
+      }
+
+      .search-container input {
+        border: none;
+        padding: 0.5rem 1rem;
+        background-color: transparent;
+        outline: none;
+        width: 75%;
+        /* background-color: red; */
+        color: #fff;
+        font-size: 1.2rem;
+      }
+
+      .search-container button {
+        padding: 0.35rem 1rem;
+        background-color: rgb(16, 163, 5);
+        color: #fff;
+        border-radius: 5px;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+
+      .todo-container {
+        width: 450px;
+        height: 400px;
+        margin: auto;
+        overflow-y: auto;
+        /* overflow-x: hidden; */
+        /* background-color: white; */
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-image: linear-gradient(#9d50bb, #6e48aa);
+        border-radius: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: rgb(180, 180, 180);
+      }
+
+      .todo-container .newTodo {
+        width: 400px;
+        border: 1px solid #fff;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        margin: 1rem auto;
+      }
+
+      .todo-container .newTodo p {
+        color: #fff;
+        padding-right: 1rem;
+        text-align: justify;
+      }
+
+      .icons {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .fa-pen-to-square {
+        color: rgb(16, 163, 5);
+        cursor: pointer;
+      }
+
+      .fa-trash-can {
+        color: red;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Todo List</h1>
+      <div class="search-container">
+        <input type="text" />
+        <button onclick="createTodo()">Add Todo</button>
+      </div>
+
+      <div class="todo-container">
+      
+      </div>
+    </div>
+
+   
+
+    <script>
+      let input = document.querySelector("input");
+      let todoContainer = document.querySelector(".todo-container");
+      let button = document.querySelector("button");
+
+      let newTodo;
+      let editTodo = null;
+      function createTodo() {
+        if (button.innerText === "Edit Todo") {
+          editTodo.target.parentElement.previousElementSibling.innerText =
+            input.value;
+            input.value =""
+          button.innerText = "Add Todo";
+          input.focus()
+        } else {
+          if (input.value !== "") {
+            newTodo = document.createElement("div");
+            newTodo.classList.add("newTodo");
+
+            todoContainer.appendChild(newTodo);
+
+            let p = document.createElement("p");
+            p.innerText = input.value;
+            input.value = "";
+
+            editIcon = document.createElement("i");
+            editIcon.classList.add("fa-regular");
+            editIcon.classList.add("fa-pen-to-square");
+
+            let removeIcon = document.createElement("i");
+            removeIcon.classList.add("fa-regular");
+            removeIcon.classList.add("fa-trash-can");
+
+            let iconContainer = document.createElement("div");
+            iconContainer.classList.add("icons");
+            iconContainer.append(editIcon, removeIcon);
+
+            newTodo.append(p, iconContainer);
+
+            removeIcon.onclick = () => {
+              iconContainer.parentNode.remove();
+            };
+
+            editIcon.onclick = (e) => {
+              input.value = p.innerText;
+              input.focus();
+              p.innerText = "";
+              button.innerText = "Edit Todo";
+              editTodo = e;
+            };
+          }
+        }
+      }
+
+      
+    </script>
+  </body>
+</html>
